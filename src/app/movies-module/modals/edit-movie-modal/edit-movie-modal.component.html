@@ -1,0 +1,168 @@
+<div class="row" style="height: 100%">
+  <div class="col-12 col-md-8">
+    <form>
+      <div class="form-group">
+        <label for="movieTitle">Title</label>
+        <input
+          [disabled]="!authService.isAdmin()"
+          type="text"
+          name="title"
+          [(ngModel)]="movie.title"
+          required
+          class="form-control"
+          id="movieTitle"
+          aria-describedby="movieTitleHelp"
+          placeholder="Movie Title"
+        />
+        <small id="movieTitleHelp" class="form-text text-muted">Please enter a movie title</small>
+      </div>
+      <div class="form-group">
+        <label for="movieReleaseDate">Release Date</label>
+        <input
+          [disabled]="!authService.isAdmin()"
+          type="text"
+          name="releaseDate"
+          [(ngModel)]="movie.releaseDate"
+          required
+          class="form-control"
+          id="movieReleaseDate"
+          aria-describedby="movieReleaseDateHelp"
+          placeholder="type a release date"
+        />
+        <small id="movieReleaseDateHelp" class="form-text text-muted">Please enter a release date</small>
+      </div>
+      <div class="form-group">
+        <label for="movieRatingStars">Rating</label>
+        <input
+          [disabled]="!authService.isAdmin()"
+          type="number"
+          name="rating"
+          [(ngModel)]="movie.rating"
+          required
+          class="form-control"
+          id="movieRatingStars"
+          aria-describedby="movieRatingStarsHelp"
+          placeholder="type a rating"
+        />
+        <small id="movieRatingStarsHelp" class="form-text text-muted">Please enter a rating</small>
+      </div>
+      <div class="form-group">
+        <label for="movieduration">Duration</label>
+        <input
+          [disabled]="!authService.isAdmin()"
+          type="text"
+          name="duration"
+          [(ngModel)]="movie.duration"
+          required
+          class="form-control"
+          id="movieduration"
+          aria-describedby="moviedurationHelp"
+          placeholder="type a movie duration"
+        />
+        <small id="moviedurationHelp" class="form-text text-muted">Please enter a proper duration</small>
+      </div>
+      <div class="form-group">
+        <label for="moviePicture">Poster</label>
+        <input
+          [disabled]="!authService.isAdmin()"
+          type="text"
+          name="duration"
+          [(ngModel)]="movie.posterurl"
+          required
+          class="form-control"
+          id="moviePicture"
+          aria-describedby="moviePictureHelp"
+          placeholder="type a movie duration"
+        />
+        <small id="moviePictureHelp" class="form-text text-muted">Please enter a proper poster url</small>
+      </div>
+      <div class="form-group">
+        <label for="moviesynopsis">Synopsis</label>
+        <textarea
+          [disabled]="!authService.isAdmin()"
+          required
+          name="storyline"
+          [(ngModel)]="movie.storyline"
+          class="form-control"
+          id="moviesynopsis"
+          aria-describedby="movieSynopsishelp"
+          placeholder="type a movie duration"
+        ></textarea>
+        <small id="movieSynopsishelp" class="form-text text-muted">Please enter a proper synopsis</small>
+      </div>
+      <div class="form-group">
+        <label>Genres</label>
+        <div class="row">
+          <div class="col-12 col-sm-4">
+            <div class="input-group">
+              <select
+                [disabled]="!authService.isAdmin()"
+                class="custom-select"
+                id="genreinputGroup"
+                aria-label="Example select with button addon"
+                #selectGenre
+              >
+                <option selected value="">Choose Genre to add...</option>
+                <option value="{{ genre.id }}" *ngFor="let genre of getNotUsedGenres(allGenres)">
+                  {{ genre.name }}
+                </option>
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button" (click)="addGenreToMovie(selectGenre.value)">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-8">
+            <div class="row">
+              <div class="col-12 col-md-4 mt-2 mx-auto" *ngFor="let i = index; let genre; of: movie.genres">
+                <div class="d-flex flex-wrap">
+                  <div class="my-auto">{{ genre.name }}</div>
+                  <button type="button" class="btn btn-outline-danger ml-2" (click)="deleteGenreFromMovie(i)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-grow">
+        <button type="button" class="btn btn-outline-danger ml-auto mr-2" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" [disabled]="!authService.isAdmin()" (click)="saveMovie()">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-12 col-md-4 mt-3 mt-md-0">
+    <div class="d-flex flex-wrap">
+      <div class="input-group">
+        <select
+          [disabled]="!authService.isAdmin()"
+          class="custom-select"
+          id="inputGroupSelect04"
+          aria-label="Example select with button addon"
+          #selectActor
+        >
+          <option selected value="">Choose actor to add...</option>
+          <option value="{{ actor.id }}" *ngFor="let actor of allActors">{{ actor.name }}</option>
+        </select>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="button" (click)="addActorToMovie(selectActor.value)">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row actorList mt-3">
+      <div class="col">
+        <div *ngFor="let i = index; let actor; of: movie?.actors" class="mb-2">
+          <app-actor-card [actor]="actor" showDeleteButton="true" (onDeleteButtonClicked)="deleteActorFromMovie(i)">
+          </app-actor-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

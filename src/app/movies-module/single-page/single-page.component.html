@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="p-2" *ngIf="movie">
+    <div class="card text-center">
+      <div class="card-header">
+        <div class="d-flex flex-wrap">
+          <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+              <a class="nav-link active" href="javascript:;">View</a>
+            </li>
+            <li class="nav-item" *ngIf="authService.isAdmin()">
+              <a class="nav-link" href="javascript:;" (click)="openEditModal()">Edit</a>
+            </li>
+          </ul>
+          <h3 class="ml-auto mr-2">{{ movie.title }} ({{ movie.originalTitle }})</h3>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-8">
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-4">
+                <img src="{{ movie.posterurl }}" class="posterImage" />
+              </div>
+              <div class="col col-md-8">
+                <div class="d-flex flex-wrap">
+                  <h4>Title :</h4>
+                  <div class="ml-auto py-auto font-weight-bolder" style="font-size: 20px">
+                    {{ movie.title }}
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap mt-4">
+                  <h4>Rating :</h4>
+                  <div class="ml-auto py-auto font-weight-bolder" style="font-size: 20px">{{ movie.rating }} Stars</div>
+                </div>
+                <div class="d-flex flex-wrap mt-4">
+                  <h4>Release Date :</h4>
+                  <div class="ml-auto py-auto font-weight-bolder" style="font-size: 20px">
+                    {{ movie.releaseDate }}
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap mt-4">
+                  <h4>Actors :</h4>
+                  <div class="ml-auto py-auto font-weight-bolder" style="font-size: 20px">
+                    {{ getActorsNames(movie.actors) }}
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap mt-4">
+                  <h4>Duration :</h4>
+                  <div class="ml-auto py-auto font-weight-bolder" style="font-size: 20px">
+                    {{ movie.duration }}
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap mt-4">
+                  <h4>Duration :</h4>
+                  <div class="ml-auto py-auto font-weight-bolder" style="font-size: 20px">
+                    {{ getGenreName(movie.genres) }}
+                  </div>
+                </div>
+                <div class="d-flex flex-wrap mt-4">
+                  <h4>Full Synopsis :</h4>
+                  <div class="ml-auto py-auto font-weight-light w-100" style="font-size: 17px">
+                    {{ movie.storyline }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4 row ml-2">
+            <div class="card text-center">
+              <div class="card-header">
+                <div class="d-flex flex-wrap">
+                  <h3 class="ml-auto mr-2">Actor list</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <div class="mb-2" *ngFor="let actor of movie?.actors">
+                      <app-actor-card [actor]="actor" (onSearchActionClicked)="searchByActorName(actor.name)">
+                      </app-actor-card>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

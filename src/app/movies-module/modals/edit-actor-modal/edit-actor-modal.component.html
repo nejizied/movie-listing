@@ -1,0 +1,74 @@
+<div class="row" style="height: 100%">
+  <div class="col-12 col-md-4">
+    <form>
+      <div class="form-group">
+        <label for="actorFullName">Full Name</label>
+        <input
+          [disabled]="!authService.isAdmin()"
+          type="text"
+          name="title"
+          [(ngModel)]="actor.name"
+          required
+          class="form-control"
+          id="actorFullName"
+          aria-describedby="actorFullNameHelp"
+          placeholder="actor Title"
+        />
+        <small id="actorFullNameHelp" class="form-text text-muted">Please enter the actor's full Name</small>
+      </div>
+      <div class="form-group">
+        <label for="actorReleaseDate">Actor's Picture</label>
+        <input
+          [disabled]="!authService.isAdmin()"
+          type="text"
+          name="releaseDate"
+          [(ngModel)]="actor.picture"
+          required
+          class="form-control"
+          id="actorReleaseDate"
+          aria-describedby="actorReleaseDateHelp"
+          placeholder="type a release date"
+        />
+        <small id="actorReleaseDateHelp" class="form-text text-muted">Please enter a release date</small>
+      </div>
+      <div class="form-group">
+        <label for="actorRatingStars">Movies number</label>
+        <input
+          [disabled]="!authService.isAdmin()"
+          type="number"
+          name="rating"
+          [(ngModel)]="actor.movies"
+          required
+          class="form-control"
+          id="actorRatingStars"
+          aria-describedby="actorRatingStarsHelp"
+          placeholder="type a rating"
+        />
+        <small id="actorRatingStarsHelp" class="form-text text-muted"
+          >Please enter the number of movies this actor was in</small
+        >
+      </div>
+      <div class="d-flex flex-grow">
+        <button type="button" class="btn btn-outline-danger ml-auto mr-2" (click)="closeModal()">Cancel</button>
+        <button [disabled]="!authService.isAdmin()" type="button" class="btn btn-primary" (click)="saveActor()">
+          Submit
+        </button>
+      </div>
+    </form>
+    <div class="mt-2">
+      <app-actor-card [actor]="actor"> </app-actor-card>
+    </div>
+  </div>
+  <div class="col-12 col-md-8">
+    <h3>Attached Movie list</h3>
+    <div class="row actorList mt-2">
+      <div
+        *ngFor="let index = index; let mv; of: actorMovies"
+        class="col-12 col-md-4 col-lg-4 mb-2"
+        style="display: block"
+      >
+        <app-movie-card [movie]="mv" [routerLink]="['/movies/movie', mv.id]" (click)="closeModal()"> </app-movie-card>
+      </div>
+    </div>
+  </div>
+</div>

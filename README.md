@@ -10,7 +10,7 @@
 2. install `json-server` globally:
 
 ```bash
-npm install json-server --save -g
+npm install -g json-server
 ```
 
 3. launch `json-server` mock server via

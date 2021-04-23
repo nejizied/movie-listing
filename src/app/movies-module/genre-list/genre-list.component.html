@@ -1,0 +1,40 @@
+<div class="container-fluid">
+  <div class="px-auto mb-3">
+    <div class="container h-100">
+      <div class="d-flex h-100">
+        <div class="px-auto py-auto">
+          <h2>{{ keyTitle }} - ({{ genres.length }})</h2>
+        </div>
+        <div *ngIf="searchQuery" class="ml-2">
+          <button class="btn btn-block btn-outline-danger" type="button" (click)="deleteSearchQuery()">
+            <i class="fa fa-trash fa-1x deleteQueryButton"></i>
+          </button>
+        </div>
+        <div class="searchbar ml-auto">
+          <input
+            class="search_input"
+            #searchInput
+            [(ngModel)]="searchQuery"
+            type="text"
+            name=""
+            placeholder="Search..."
+            (keydown.enter)="searchForMovies($event.target.value)"
+          />
+          <a href="javascript:;" class="search_icon" (click)="searchForMovies(searchInput.value)"
+            ><i class="fas fa-search"></i
+          ></a>
+        </div>
+        <div class="ml-2 my-2" *ngIf="authService.isAdmin()">
+          <button class="btn btn-primary" type="button" (click)="openEditModal(null)">
+            <i class="fa fa-plus fa-2x"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row p-2">
+    <div *ngFor="let index = index; let mv; of: genres" class="col-12 col-md-4 col-lg-3 mb-2" style="display: block">
+      <app-genre-card [genre]="mv" (click)="openEditModal(mv)"> </app-genre-card>
+    </div>
+  </div>
+</div>
